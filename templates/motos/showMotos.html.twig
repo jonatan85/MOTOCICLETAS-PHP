@@ -1,0 +1,24 @@
+{% extends 'motos/baseMotos.html.twig'%}
+{% block contenido %}
+<div class="container">
+    <div class="row">
+        <div class="col text-center"><h2> Modelo: {{moto.modelo}} Marca: {{moto.marca}} </h2></div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <img src="{{moto.img}}">
+        </div>
+        <div class="col">
+            <div class="row">
+                <div class="col"> Color: {{moto.color}}</div>
+            </div>
+            <div class="row">
+                <ul>
+                   C.V:{{moto.cv}}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}      
+           
