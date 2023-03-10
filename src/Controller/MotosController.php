@@ -4,6 +4,7 @@
 namespace App\Controller;
 
 use App\Entity\Moto;
+use App\Entity\Tipo;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -170,58 +171,62 @@ class MotosController extends AbstractController{
         $moto3->setColor("Negro");
         $moto3->setImg("https://www.motofichas.com/images/phocagallery/Honda/SH125i_2017/08-honda-sh125-2019-estatica-negro.jpg");
 
-        // // Añadimos tipos.
-        // $tipo1 = new Tipo();
-        // $tipo1-> setTipo("Scooter");
+        // Añadimos tipos.
+        $tipo1 = new Tipo();
+        $tipo1-> setNombre("Scooter");
 
-        // $tipo2 = new Tipo();
-        // $tipo2-> setTipo("Naked");
+        $tipo2 = new Tipo();
+        $tipo2-> setNombre("Naked");
 
-        // $tipo3 = new Tipo();
-        // $tipo3-> setTipo("Trail");
+        $tipo3 = new Tipo();
+        $tipo3-> setNombre("Trail");
 
-        // $tipo4 = new Tipo();
-        // $tipo4-> setTipo("Deportivas");
+        $tipo4 = new Tipo();
+        $tipo4-> setNombre("Deportivas");
 
-        // $tipo5 = new Tipo();
-        // $tipo5-> setTipo("Clasica");
+        $tipo5 = new Tipo();
+        $tipo5-> setNombre("Clasica");
 
-        // $tipo6 = new Tipo();
-        // $tipo6-> setTipo("Custom");
+        $tipo6 = new Tipo();
+        $tipo6-> setNombre("Custom");
 
-        // $tipo7 = new Tipo();
-        // $tipo7-> setTipo("CafeRacer");
+        $tipo7 = new Tipo();
+        $tipo7-> setNombre("CafeRacer");
 
-        // $tipo8 = new Tipo();
-        // $tipo8-> setTipo("Scrambler");
+        $tipo8 = new Tipo();
+        $tipo8-> setNombre("Scrambler");
 
-        // $tipo9 = new Tipo();
-        // $tipo9-> setTipo("Touring");
+        $tipo9 = new Tipo();
+        $tipo9-> setNombre("Touring");
 
-        // $tipo10 = new Tipo();
-        // $tipo10-> setTipo("Enduro");
+        $tipo10 = new Tipo();
+        $tipo10-> setNombre("Enduro");
 
-        // $tipo11 = new Tipo();
-        // $tipo11-> setTipo("Motocross");
+        $tipo11 = new Tipo();
+        $tipo11-> setNombre("Motocross");
 
-        // $tipo12 = new Tipo();
-        // $tipo12-> setTipo("Trial");
+        $tipo12 = new Tipo();
+        $tipo12-> setNombre("Trial");
 
-        // $tipo13 = new Tipo();
-        // $tipo13-> setTipo("Rally");
+        $tipo13 = new Tipo();
+        $tipo13-> setNombre("Rally");
 
-        // $tipo14 = new Tipo();
-        // $tipo14-> setTipo("Supermotard");
+        $tipo14 = new Tipo();
+        $tipo14-> setNombre("Supermotard");
 
-        // // Relaccionamos los tipos.
-        // $moto1 -> addTipo($tipo1);
-        // $moto2 -> addTipo($tipo2);
-        // $moto3 -> addTipo($tipo3);
+        // Relaccionamos los tipos.
+        $moto1 -> addTipo($tipo1);
+        $moto2 -> addTipo($tipo2);
+        $moto3 -> addTipo($tipo3);
 
         // Tenemos que indicarle a dorctrine que existen, lo hacemos con persiste.
         $doctrione->persist($moto1);
         $doctrione->persist($moto2);
         $doctrione->persist($moto3);
+
+        $doctrione->persist($tipo1);
+        $doctrione->persist($tipo2);
+        $doctrione->persist($tipo3);
 
         // Hacemos el flush para mandarlo a base de datos.
         $doctrione->flush();

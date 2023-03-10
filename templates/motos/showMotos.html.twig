@@ -11,10 +11,16 @@
         <div class="col">
             <div class="row">
                 <div class="col"> Color: {{moto.color}}</div>
+                <div class="col"> Color: {{moto.cv}}</div>
+                <div class="col"> Color: {{moto.cilindrada}}</div>
             </div>
             <div class="row">
                 <ul>
-                   C.V:{{moto.cv}}
+                    {% for tipo in moto.Tipos%}
+                        <li>
+                            {{ tipo.nombre }}
+                        </li>
+                    {% endfor %}
                 </ul>
             </div>
         </div>

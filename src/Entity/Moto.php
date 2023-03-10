@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\MotoRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -34,6 +36,14 @@ class Moto
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
+
+    #[ORM\ManyToMany(targetEntity: Tipo::class, inversedBy: 'moto')]
+    private Collection $Tipos;
+
+    public function __construct()
+    {
+        $this->Tipos = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -120,6 +130,30 @@ class Moto
     public function setDescription(?string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Tipo>
+     */
+    public function getTipos(): Collection
+    {
+        return $this->Tipos;
+    }
+
+    public function addTipo(Tipo $tipo): self
+    {
+        if (!$this->Tipos->contains($tipo)) {
+            $this->Tipos->add($tipo);
+        }
+
+        return $this;
+    }
+
+    public function removeTipo(Tipo $tipo): self
+    {
+        $this->Tipos->removeElement($tipo);
 
         return $this;
     }
