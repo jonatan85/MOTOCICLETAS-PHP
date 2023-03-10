@@ -5,8 +5,12 @@ namespace App\Controller;
 
 use App\Entity\Moto;
 use App\Entity\Tipo;
+use App\Form\MotoType;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Mapping\Entity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -121,9 +125,9 @@ class MotosController extends AbstractController{
 
     // Vamos a mostrar los pokemons con doctrine.
     #[Route('/motos', name:'listMotos')]
-    public function listMotos(EntityManagerInterface $doctrione){
+    public function listMotos(EntityManagerInterface $doctrine){
         // Para hacer consulatas tenemos coger de el repositorio la tabla sobre la queremos hacer la consulta.
-        $repositorio=$doctrione->getRepository(Moto::class);
+        $repositorio=$doctrine->getRepository(Moto::class);
                             // findAll para traer todo.
         $motos=$repositorio->findAll();
 
@@ -131,8 +135,8 @@ class MotosController extends AbstractController{
     }
                 // Añadimos el id.
     #[Route('/moto/{id}', name:'showMotos')]
-    public function showMotos(EntityManagerInterface $doctrione, $id ){
-        $repositorio=$doctrione->getRepository(Moto::class);
+    public function showMotos(EntityManagerInterface $doctrine, $id ){
+        $repositorio=$doctrine->getRepository(Moto::class);
                             // Para traer uno.
                                 // Traemos el id.
         $moto=$repositorio->find($id);
@@ -144,7 +148,7 @@ class MotosController extends AbstractController{
     #[Route('/new/moto')]
                         // En cada funcion donde utilicemos doctrine le tenemos que pasar como argumento el servicio de doctrine.
                                     // Se convova como primer valor y como se gundo se declara una variable.
-    public function newMotos(EntityManagerInterface $doctrione){
+    public function newMotos(EntityManagerInterface $doctrine){
         // Tenemos que crear los objetos de tipo moto.
         $moto1= new Moto();
         // Creamos los atributos.
@@ -220,19 +224,37 @@ class MotosController extends AbstractController{
         $moto3 -> addTipo($tipo3);
 
         // Tenemos que indicarle a dorctrine que existen, lo hacemos con persiste.
-        $doctrione->persist($moto1);
-        $doctrione->persist($moto2);
-        $doctrione->persist($moto3);
+        $doctrine->persist($moto1);
+        $doctrine->persist($moto2);
+        $doctrine->persist($moto3);
 
-        $doctrione->persist($tipo1);
-        $doctrione->persist($tipo2);
-        $doctrione->persist($tipo3);
+        $doctrine->persist($tipo1);
+        $doctrine->persist($tipo2);
+        $doctrine->persist($tipo3);
 
         // Hacemos el flush para mandarlo a base de datos.
-        $doctrione->flush();
+        $doctrine->flush();
         
         // Para comprobar si tenemos error y nos devuelve un mensaje en pantalla.
         return new Response("Motos insertadas correctamente");
     }
-    
+    // Ruta para crear un formulario.
+    #[Route('/insert/moto', name: 'inserMoto')]
+    public function insertMoto(Request $request, EntityManagerInterface $doctrine) {
+        // Creamos el formulario y le indicamos los parametros en la carpeta form.
+        $form = $this-> createForm(MotoType::class);
+        $form-> handleRequest($request);
+        // Esto siempre es igual en todos los formularios de php.
+        if($form-> isSubmitted() && $form-> isValid()) {
+            // Tenemos que guardarlo en base de datos.
+            $moto = $form-> getData();
+            $doctrine-> persist($moto);
+            $doctrine-> flush();
+            $this-> addFlash('success', 'Moto insertada correctamente');
+            return $this-> redirectToRoute('listMotos');
+        }
+        return $this-> renderForm('motos/createMotos.html copy.twig', [
+            'motoForm'=> $form
+        ]);
+    }
 }

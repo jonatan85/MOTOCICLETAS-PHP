@@ -1,5 +1,8 @@
 {% extends 'motos/baseMotos.html.twig' %}
 {% block contenido %}
+    {% for mensaje in app.flashes('success') %}
+    <p> {{ mensaje }} </p>
+    {% endfor %}
 <h2>MOTOCICLETAS</h2>
     <div class="row row-cols-1 row-cols-md-2">
         {% for moto in motos %}
