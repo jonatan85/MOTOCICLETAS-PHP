@@ -6,6 +6,8 @@ namespace App\Controller;
 use App\Entity\Moto;
 use App\Entity\Tipo;
 use App\Form\MotoType;
+use App\Manager\Manager;
+use App\Manager\MotoManager;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\Entity;
@@ -13,6 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 // Creamos la clase class que tiene que ser igual que el nombre de la clase.
                                 // Como heredamos de twig utlizamos abstractController.
@@ -123,7 +126,7 @@ class MotosController extends AbstractController{
     //     return $this->render('motos/listMotos.html.twig', ['motos' => $motos]);
     // }
 
-    // Vamos a mostrar los pokemons con doctrine.
+    // Vamos a mostrar las motos con doctrine.
     #[Route('/motos', name:'listMotos')]
     public function listMotos(EntityManagerInterface $doctrine){
         // Para hacer consulatas tenemos coger de el repositorio la tabla sobre la queremos hacer la consulta.
@@ -240,9 +243,38 @@ class MotosController extends AbstractController{
     }
     // Ruta para crear un formulario.
     #[Route('/insert/moto', name: 'inserMoto')]
-    public function insertMoto(Request $request, EntityManagerInterface $doctrine) {
+    public function insertMoto(Request $request, EntityManagerInterface $doctrine, MotoManager $manager) {
         // Creamos el formulario y le indicamos los parametros en la carpeta form.
         $form = $this-> createForm(MotoType::class);
+        $form-> handleRequest($request);
+        // Esto siempre es igual en todos los formularios de php.
+        if($form-> isSubmitted() && $form-> isValid()) {
+            // Tenemos que guardarlo en base de datos.
+            $moto = $form-> getData();
+            $motoImg = $form->get('imgMoto') -> getData();
+            if($motoImg){
+                $bikeImg = $manager->load($motoImg, $this->getParameter('kernel.project_dir').'/public/img' );
+                $moto -> setImg('/img/'.$bikeImg);
+            }
+            $doctrine-> persist($moto);
+            $doctrine-> flush();
+            $this-> addFlash('success', 'Moto insertada correctamente');
+            return $this-> redirectToRoute('listMotos');
+        }
+        return $this-> renderForm('motos/createMotos.html copy.twig', [
+            'motoForm'=> $form
+        ]);
+    }
+    // Editar motos, se genera igual que crear pero añadiendo un id para identificar la moto que queremos editar.
+    #[Route('/edit/moto/{id}', name: 'editMoto')]
+    public function editMoto(Request $request, EntityManagerInterface $doctrine, $id) {
+        // Buscamos la moto que queremos editar.
+        $repositorio=$doctrine->getRepository(Moto::class);
+        // Para traer uno.
+            // Traemos el id.
+        $moto=$repositorio->find($id);
+        // Creamos el formulario y le indicamos los parametros en la carpeta form.
+        $form = $this-> createForm(MotoType::class, $moto);
         $form-> handleRequest($request);
         // Esto siempre es igual en todos los formularios de php.
         if($form-> isSubmitted() && $form-> isValid()) {
@@ -256,5 +288,17 @@ class MotosController extends AbstractController{
         return $this-> renderForm('motos/createMotos.html copy.twig', [
             'motoForm'=> $form
         ]);
+    }
+    // Borrar.
+    #[Route('/delete/moto/{id}', name:'deleteMoto')]
+    public function deleteMotos(EntityManagerInterface $doctrine, $id ){
+        $repositorio=$doctrine->getRepository(Moto::class);
+                            // Para traer uno.
+                                // Traemos el id.
+        $moto=$repositorio->find($id);
+        $doctrine->remove($moto);
+        $doctrine->flush();
+        $this->addFlash('success', 'Moto Borrada Correctamente');
+        return $this->redirectToRoute('listMotos');
     }
 }
