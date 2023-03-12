@@ -10,6 +10,10 @@
         <div class="container">
             <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
                 <a class="navbar-brand" href="#"><img height="35px" src="{# LOGO #}"></a>
+                {% if is_granted('ROLE_USER') %}
+                    <p class="btn btn-primary">Nombre: {{ app.user.name }}</p>
+                    <a class="btn btn-primary" href="{{ path('app_logout') }}">cerrar sesion</a>
+                {% endif %}
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>

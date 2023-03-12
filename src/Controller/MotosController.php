@@ -261,7 +261,7 @@ class MotosController extends AbstractController{
             $this-> addFlash('success', 'Moto insertada correctamente');
             return $this-> redirectToRoute('listMotos');
         }
-        return $this-> renderForm('motos/createMotos.html copy.twig', [
+        return $this-> renderForm('motos/createMotos.html.twig', [
             'motoForm'=> $form
         ]);
     }
@@ -285,11 +285,15 @@ class MotosController extends AbstractController{
             $this-> addFlash('success', 'Moto insertada correctamente');
             return $this-> redirectToRoute('listMotos');
         }
-        return $this-> renderForm('motos/createMotos.html copy.twig', [
+        return $this-> renderForm('motos/createMotos.html.twig', [
             'motoForm'=> $form
         ]);
     }
+    
     // Borrar.
+
+    // Para controlar el adimistrador.
+    #[IsGranted('ROLE_ADMIN')]
     #[Route('/delete/moto/{id}', name:'deleteMoto')]
     public function deleteMotos(EntityManagerInterface $doctrine, $id ){
         $repositorio=$doctrine->getRepository(Moto::class);
