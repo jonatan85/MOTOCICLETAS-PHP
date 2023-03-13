@@ -24,8 +24,8 @@ class MotoType extends AbstractType
                 'attr' => ['placeholder' => 'Ej. Moto'] 
              ])
             ->add('marca')
-                        // Para añadir una imagen propia y ponemos mapped a false para que no de error.
-            ->add('imgMoto', FileType::class, ['mapped'=> false])
+                        // Para añadir una imagen propia y ponemos mapped a false para que no de error. FileType::class
+            ->add('imgMoto', DropzoneType::class, ['mapped'=> false])
             ->add('cv')
             ->add('cilindrada')
             ->add('color')

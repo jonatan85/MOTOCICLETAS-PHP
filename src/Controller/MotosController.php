@@ -6,6 +6,7 @@ namespace App\Controller;
 use App\Entity\Moto;
 use App\Entity\Tipo;
 use App\Form\MotoType;
+use App\Form\SearchType;
 use App\Manager\Manager;
 use App\Manager\MotoManager;
 use Doctrine\ORM\EntityManager;
@@ -128,13 +129,22 @@ class MotosController extends AbstractController{
 
     // Vamos a mostrar las motos con doctrine.
     #[Route('/motos', name:'listMotos')]
-    public function listMotos(EntityManagerInterface $doctrine){
+    public function listMotos(EntityManagerInterface $doctrine, Request $request){
+        $form = $this-> createForm(SearchType::class);
+        $form-> handleRequest($request);
+        // Esto siempre es igual en todos los formularios de php.
+        if($form-> isSubmitted() && $form-> isValid()) {
+            // Tenemos que guardarlo en base de datos.
+            $moto = $form-> get('moto')->getData();
+            return $this->redirectToRoute('showMotos', ['id'=>$moto->getId()]);
+        }
+
         // Para hacer consulatas tenemos coger de el repositorio la tabla sobre la queremos hacer la consulta.
         $repositorio=$doctrine->getRepository(Moto::class);
                             // findAll para traer todo.
         $motos=$repositorio->findAll();
 
-        return $this->render('motos/listMotos.html.twig', ['motos' => $motos]);
+        return $this->render('motos/listMotos.html.twig', ['motos' => $motos, 'searchForm'=>$form]);
     }
                 // Añadimos el id.
     #[Route('/moto/{id}', name:'showMotos')]
