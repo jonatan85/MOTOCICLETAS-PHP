@@ -1,0 +1,45 @@
+/* styles for container and row elements */
+.container-show {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.row-show {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 -0.5rem;
+}
+
+.col-show {
+  flex: 1 0 50%;
+  padding: 0.5rem;
+}
+
+.col-show h2 {
+  margin-top: 0;
+}
+
+.img-show {
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0,0,0,.1);
+  margin-bottom: 1rem;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  margin-bottom: 0.5rem;
+  padding: 0.25rem 0.5rem;
+  background-color: #f2f2f2;
+  border-radius: 5px;
+}
+

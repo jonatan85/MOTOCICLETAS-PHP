@@ -16,7 +16,7 @@ class MotoFixture extends Fixture
       
 
         $faker = Factory::create();
-        for ($i=0; $i <= 100; $i++){
+        for ($i=0; $i <= 1; $i++){
             $moto = new Moto();
             $moto->setMarca($faker->word());
             $moto->setModelo($faker->word());

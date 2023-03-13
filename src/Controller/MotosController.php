@@ -21,111 +21,6 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 // Creamos la clase class que tiene que ser igual que el nombre de la clase.
                                 // Como heredamos de twig utlizamos abstractController.
 class MotosController extends AbstractController{
-    // Tipamos el tipo de funcion publica, privada o *estatica*
-    // Para asigar una ruta a la funcion #[Route())].
-    // #[Route('/moto')]
-    // public function showMotos(){
-    //     // Datos para mostrar los campos de la moto.
-    //     $moto = [
-    //         'marca' => 'Ducati',
-    //         'modelo' => '696',
-    //         'cv' => '80',
-    //         'cilindrada' => '696',
-    //         'color' => 'Amarilla',
-    //         'img' => 'https://www.motofichas.com/images/phocagallery/Ducati_Motor_Holding_SpA/Monster_696/Monster_696/ducati_monster_696_+.jpg'
-    //     ];
-    //     // Tenemos que crear la plantilla twig en templates.
-    //     // Para utililazar la plantilla twig le pasamos la ubicacion de la carpeta motos y entre un array y comillas motos con la variable de $motos.
-    //     return $this->render('motos/showMotos.html.twig', ['moto' => $moto]);
-    // }
-    // Creamos una lista con las motos.
-    // #[Route('/motos', name:'listMotos')]
-    // public function listMotos(){
-    //     $motos = [
-    //         [
-
-    //             'marca' => 'Ducati',
-    //             'modelo' => '696',
-    //             'cv' => '80',
-    //             'cilindrada' => '696',
-    //             'color' => 'Amarilla',
-    //             'img' => 'https://www.motofichas.com/images/phocagallery/Ducati_Motor_Holding_SpA/Monster_696/Monster_696/ducati_monster_696_+.jpg'
-    //         ],
-    //         [
-
-    //             'marca' => 'Honda',
-    //             'modelo' => 'AfricaTwin',
-    //             'cv' => '101',
-    //             'cilindrada' => '1084',
-    //             'color' => 'Blanca',
-    //             'img' => 'https://www.motofichas.com/images/phocagallery/Honda/africa-twin-adventure-sports-2022/01-honda-africa-twin-adventure-sports-2022-estudio-blanco.jpg'
-    //         ],
-    //         [
-
-    //             'marca' => 'Yamaha',
-    //             'modelo' => 'MT-07',
-    //             'cv' => '73',
-    //             'cilindrada' => '689',
-    //             'color' => 'Azul',
-    //             'img' => 'https://www.motofichas.com/images/phocagallery/yamaha/mt-07-2023/01-yamaha-mt-07-2023-estudio-gris-cyan.jpg'
-    //         ],
-    //         [
-
-    //             'marca' => 'Yamaha',
-    //             'modelo' => 'Tenere',
-    //             'cv' => '73',
-    //             'cilindrada' => '689',
-    //             'color' => 'Blanca',
-    //             'img' => 'https://www.motofichas.com/images/phocagallery/yamaha/tenere-700-rally-edition-2023/01-yamaha-tenere-700-rally-edition-2023-estudio-blanco.jpg'
-    //         ],
-    //         [
-
-    //             'marca' => 'Ducati',
-    //             'modelo' => 'Panigale V4',
-    //             'cv' => '215',
-    //             'cilindrada' => '1103',
-    //             'color' => 'Rojo',
-    //             'img' => 'https://www.motofichas.com/images/phocagallery/ducati/panigale-v4-s-2023/01-ducati-panigale-v4-s-2023-estudio-rojo-01.jpg'
-    //         ],
-    //         [
-
-    //             'marca' => 'Harley-Davison',
-    //             'modelo' => 'Fat-Bob',
-    //             'cv' => '93',
-    //             'cilindrada' => '1868',
-    //             'color' => 'Negra',
-    //             'img' => 'https://www.motofichas.com/images/phocagallery/Harley-Davidson/fat-bob-2023/01-harley-davidson-fat-bob-2023-estudio-gris-01.jpg'
-    //         ],
-    //         [
-
-    //             'marca' => 'Yamaha',
-    //             'modelo' => 'T-Max',
-    //             'cv' => '47',
-    //             'cilindrada' => '560',
-    //             'color' => 'Negro',
-    //             'img' => 'https://www.motofichas.com/images/phocagallery/yamaha/tmax-tech-max-2022/06-yamaha-tmax-tech-max-2022-estudio-gris.jpg'
-    //         ],
-    //         [
-
-    //             'marca' => 'Kymco',
-    //             'modelo' => 'XCITING S 400',
-    //             'cv' => '36',
-    //             'cilindrada' => '399',
-    //             'color' => 'Azul',
-    //             'img' => 'https://www.motofichas.com/images/phocagallery/Kwang_Yang_Motor_Co/xciting-s-400-2018/02-kymco-xciting-s-400-2018-perfil-azul.jpg'
-    //         ],
-    //         [
-
-    //             'marca' => 'Honda',
-    //             'modelo' => 'SH',
-    //             'cv' => '12',
-    //             'cilindrada' => '125',
-    //             'color' => 'Negro',
-    //             'img' => 'https://www.motofichas.com/images/phocagallery/Honda/SH125i_2017/08-honda-sh125-2019-estatica-negro.jpg'
-    //         ]
-    //     ];
-    //     return $this->render('motos/listMotos.html.twig', ['motos' => $motos]);
-    // }
 
     // Vamos a mostrar las motos con doctrine.
     #[Route('/motos', name:'listMotos')]
@@ -187,7 +82,65 @@ class MotosController extends AbstractController{
         $moto3->setCilindrada("125");
         $moto3->setColor("Negro");
         $moto3->setImg("https://www.motofichas.com/images/phocagallery/Honda/SH125i_2017/08-honda-sh125-2019-estatica-negro.jpg");
-
+       
+        $moto4= new Moto();
+        $moto4->setMarca("Ducati");
+        $moto4->setModelo("696");
+        $moto4->setCv("80");
+        $moto4->setCilindrada("696");
+        $moto4->setColor("Roja");
+        $moto4->setImg("https://www.motofichas.com/images/phocagallery/Ducati_Motor_Holding_SpA/Monster_696/Monster_696/ducati_monster_696_+.jpg");
+        
+        $moto5= new Moto();
+        $moto5->setMarca("Honda");
+        $moto5->setModelo("AfricaTwin");
+        $moto5->setCv("1084");
+        $moto5->setCilindrada("696");
+        $moto5->setColor("Blanca");
+        $moto5->setImg("https://www.motofichas.com/images/phocagallery/Honda/africa-twin-adventure-sports-2022/01-honda-africa-twin-adventure-sports-2022-estudio-blanco.jpg");
+       
+        $moto6= new Moto();
+        $moto6->setMarca("Yamaha");
+        $moto6->setModelo("MT-07");
+        $moto6->setCv("73");
+        $moto6->setCilindrada("686");
+        $moto6->setColor("Azul");
+        $moto6->setImg("https://www.motofichas.com/images/phocagallery/yamaha/mt-07-2023/01-yamaha-mt-07-2023-estudio-gris-cyan.jpg");
+        
+        $moto7= new Moto();
+        $moto7->setMarca("Yamaha");
+        $moto7->setModelo("Tenere");
+        $moto7->setCv("73");
+        $moto7->setCilindrada("686");
+        $moto7->setColor("Blanca");
+        $moto7->setImg("https://www.motofichas.com/images/phocagallery/yamaha/tenere-700-rally-edition-2023/01-yamaha-tenere-700-rally-edition-2023-estudio-blanco.jpg");
+      
+        $moto8= new Moto();
+        $moto8->setMarca("Ducati");
+        $moto8->setModelo("Panigale V4");
+        $moto8->setCv("215");
+        $moto8->setCilindrada("1103");
+        $moto8->setColor("Rojo");
+        $moto8->setImg("https://www.motofichas.com/images/phocagallery/ducati/panigale-v4-s-2023/01-ducati-panigale-v4-s-2023-estudio-rojo-01.jpg");
+       
+        $moto9= new Moto();
+        $moto9->setMarca("Harley-Davison");
+        $moto9->setModelo("Fat-Bob");
+        $moto9->setCv("93");
+        $moto9->setCilindrada("1868");
+        $moto9->setColor("Negra");
+        $moto9->setImg("https://www.motofichas.com/images/phocagallery/Harley-Davidson/fat-bob-2023/01-harley-davidson-fat-bob-2023-estudio-gris-01.jpg");
+        
+        $moto10= new Moto();
+        $moto10->setMarca("Yamaha");
+        $moto10->setModelo("T-Max");
+        $moto10->setCv("47");
+        $moto10->setCilindrada("560");
+        $moto10->setColor("Negro");
+        $moto10->setImg("https://www.motofichas.com/images/phocagallery/yamaha/tmax-tech-max-2022/06-yamaha-tmax-tech-max-2022-estudio-gris.jpg");
+        
+        
+        
         // Añadimos tipos.
         $tipo1 = new Tipo();
         $tipo1-> setNombre("Scooter");
@@ -235,15 +188,36 @@ class MotosController extends AbstractController{
         $moto1 -> addTipo($tipo1);
         $moto2 -> addTipo($tipo2);
         $moto3 -> addTipo($tipo3);
+        $moto4 -> addTipo($tipo4);
+        $moto5 -> addTipo($tipo5);
+        $moto6 -> addTipo($tipo6);
+        $moto7 -> addTipo($tipo7);
+        $moto8 -> addTipo($tipo8);
+        $moto9 -> addTipo($tipo9);
+        $moto10 -> addTipo($tipo10);
 
         // Tenemos que indicarle a dorctrine que existen, lo hacemos con persiste.
         $doctrine->persist($moto1);
         $doctrine->persist($moto2);
         $doctrine->persist($moto3);
+        $doctrine->persist($moto4);
+        $doctrine->persist($moto5);
+        $doctrine->persist($moto6);
+        $doctrine->persist($moto7);
+        $doctrine->persist($moto8);
+        $doctrine->persist($moto9);
+        $doctrine->persist($moto10);
 
         $doctrine->persist($tipo1);
         $doctrine->persist($tipo2);
         $doctrine->persist($tipo3);
+        $doctrine->persist($tipo4);
+        $doctrine->persist($tipo5);
+        $doctrine->persist($tipo6);
+        $doctrine->persist($tipo7);
+        $doctrine->persist($tipo8);
+        $doctrine->persist($tipo9);
+        $doctrine->persist($tipo10);
 
         // Hacemos el flush para mandarlo a base de datos.
         $doctrine->flush();
